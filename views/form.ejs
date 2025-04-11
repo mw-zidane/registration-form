@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire d'inscription Formation PMP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5 mb-5">
+    <h1 class="mb-4">Formulaire d'inscription Formation PMP</h1>
+    <form action="/submit" method="POST" class="card p-4 shadow-sm">
+        <h4>Informations sur l’entreprise</h4>
+        <div class="mb-2"><input class="form-control" name="entreprise_nom" placeholder="Nom de l’entreprise" required></div>
+        <div class="mb-2"><input class="form-control" name="entreprise_adresse" placeholder="Adresse" required></div>
+        <div class="row">
+            <div class="col-md-4 mb-2"><input class="form-control" name="code_postal" placeholder="Code postal" required></div>
+            <div class="col-md-4 mb-2"><input class="form-control" name="ville" placeholder="Ville" required></div>
+            <div class="col-md-4 mb-2"><input class="form-control" name="pays" placeholder="Pays" required></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-2"><input class="form-control" name="tel" placeholder="Tél. +237" required></div>
+            <div class="col-md-6 mb-2"><input class="form-control" name="site" placeholder="Site Internet"></div>
+        </div>
+        <div class="mb-4"><input class="form-control" name="fax" placeholder="Fax"></div>
+
+        <h4>Informations sur le participant</h4>
+        <div class="mb-2"><input class="form-control" name="nom_prenom" placeholder="Nom(s) et prénom(s)" required></div>
+        <div class="mb-2"><input class="form-control" name="fonction" placeholder="Fonction" required></div>
+        <div class="mb-2"><input class="form-control" name="experience" placeholder="Années d’expérience" required></div>
+        <div class="mb-4"><input class="form-control" type="email" name="email" placeholder="Adresse Email" required></div>
+
+        <h4>Informations supplémentaires</h4>
+        <p>Avez-vous déjà suivi cette formation ou une formation similaire ?</p>
+        <div class="mb-2">
+            <label>
+                <input type="radio" name="formation_similaire" value="Oui" required>
+                Oui
+            </label>
+            <label>
+                <input type="radio" name="formation_similaire" value="Non">
+                Non
+            </label>
+        </div>
+        <p>Avez-vous une expérience dans le domaine du Management de Projets ?</p>
+        <div class="mb-2">
+            <label>
+                <input type="radio" name="experience_mp" value="Oui" required>
+                Oui
+            </label>
+            <label>
+                <input type="radio" name="experience_mp" value="Non">
+                Non
+            </label>
+        </div>
+        <div class="mb-4"><input class="form-control" name="specialisation" placeholder="Si Oui, dans quelle spécialisation"></div>
+
+        <button class="btn btn-primary w-100" type="submit">Envoyer</button>
+    </form>
+</div>
+
+
+<!-- ✅ Success Modal -->
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <div class="icon">
+            <span>&#10004;</span>
+        </div>
+        <h2>Succès !</h2>
+        <p>Votre inscription a bien été envoyée.</p>
+        <button id="closeModal">Fermer</button>
+    </div>
+</div>
+
+<style>
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5);
+        animation: fadeIn 0.5s ease;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        animation: slideUp 0.4s ease;
+    }
+
+    .modal-content .icon span {
+        font-size: 60px;
+        color: green;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .modal-content h2 {
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+
+    .modal-content p {
+        font-size: 16px;
+    }
+
+    #closeModal {
+        background-color: green;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    #closeModal:hover {
+        background-color: #2e8b57;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    @keyframes slideUp {
+        from {transform: translateY(100px); opacity: 0;}
+        to {transform: translateY(0); opacity: 1;}
+    }
+</style>
+
+
+<script>
+    document.querySelector('form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const response = await fetch('/submit', {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+        });
+
+        if (response.ok) {
+            // Show modal
+            document.getElementById('successModal').style.display = 'block';
+            form.reset();
+        } else {
+            alert("Erreur lors de l'envoi. Veuillez réessayer.");
+        }
+    });
+
+    // Close modal
+    document.getElementById('closeModal').addEventListener('click', function () {
+        document.getElementById('successModal').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
