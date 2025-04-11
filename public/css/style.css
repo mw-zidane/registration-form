@@ -1,0 +1,95 @@
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #eef2f3, #c9d6ff);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Form container */
+form {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Section titles */
+h1, h4 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+h4 {
+    margin-top: 30px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Radio buttons */
+.radio-group {
+    margin-bottom: 15px;
+}
+
+.radio-group label {
+    margin-right: 20px;
+    font-weight: 500;
+}
+
+/* Button */
+button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #2c80b4;
+    cursor: pointer;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+    }
+}
