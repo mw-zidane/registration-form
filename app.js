@@ -35,6 +35,8 @@ app.post('/submit', async (req, res) => {
         <li><strong>Années d’expérience:</strong> ${form.experience}</li>
         <li><strong>Email:</strong> ${form.email}</li>
     </ul>
+    <h4>Pack</h4>
+    <p><strong>Pack :</strong> ${form.pack}</p>
     <h4>Informations supplémentaires</h4>
     <ul>
         <li><p><strong>Formation similaire :</strong> ${form.formation_similaire}</p></li>

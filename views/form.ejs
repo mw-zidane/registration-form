@@ -43,6 +43,23 @@
                     <div class="mb-2"><input class="form-control" name="experience" placeholder="Années d’expérience" required></div>
                     <div class="mb-4"><input class="form-control" type="email" name="email" placeholder="Adresse Email" required></div>
 
+                    <h4>Choix du pack</h4>
+<!--                    <p></p>-->
+                    <div class="mb-2">
+                        <label>
+                            <input type="radio" name="pack" value="Formation_35H_PDU" required>
+                            Formation + 35H PDU
+                        </label>
+                        <label>
+                            <input type="radio" name="pack" value="Coaching_Exam">
+                            Certification (Coaching + Examen)
+                        </label>
+                        <label>
+                            <input type="radio" name="pack" value="Formation_Coaching_Exam">
+                            Formation + Coaching + Certification
+                        </label>
+                    </div>
+
                     <h4>Informations supplémentaires</h4>
                     <p>Avez-vous déjà suivi cette formation ou une formation similaire ?</p>
                     <div class="mb-2">
@@ -68,7 +85,7 @@
                             Non
                         </label>
                     </div>
-                    <div class="mb-4"><input class="form-control" name="specialisation" placeholder="Si Oui, dans quelle spécialisation"></div>
+                    <div class="mb-4"><input class="form-control" name="specialisation" placeholder="Si Oui, dans quelle spécialisation ?"></div>
 
                     <p>Mentionnez vos conditions spécifiques concernant la formation ici!</p>
                     <textarea class="form-control mb-4" name="conditions_specifiques"></textarea>
