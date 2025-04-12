@@ -41,7 +41,7 @@ app.post('/submit', async (req, res) => {
         <li>${form.formation ? `<p><strong>Formation :</strong> ${form.formation}</p>` : ''}</li>
         <li><p><strong>Expérience en management de projet :</strong> ${form.experience_mp}</p></li>
         <li>${form.specialisation ? `<p><strong>Spécialisation :</strong> ${form.specialisation}</p>` : ''}</li>
-        <li><p><strong>Conditions Spécifiques :</strong> ${form.conditions_specifiques}</p></li>
+        <li><p><strong>Conditions Spécifiques:</strong> ${form.conditions_specifiques}</p></li>
     </ul>
   `;
 
