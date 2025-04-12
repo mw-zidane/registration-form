@@ -37,8 +37,10 @@ app.post('/submit', async (req, res) => {
     </ul>
     <h4>Informations supplémentaires</h4>
     <p><strong>Formation similaire :</strong> ${form.formation_similaire}</p>
+    ${form.formation ? `<p><strong>Formation :</strong> ${form.formation}</p>` : ''}
     <p><strong>Expérience en management de projet :</strong> ${form.experience_mp}</p>
     ${form.specialisation ? `<p><strong>Spécialisation :</strong> ${form.specialisation}</p>` : ''}
+    <p><strong>Conditions Spécifiques :</strong> ${form.conditions_specifiques}</p>
   `;
 
     // Transporter using your SMTP
