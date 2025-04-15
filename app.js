@@ -93,7 +93,7 @@ app.post('/submit', async (req, res) => {
 
     // Email options for user confirmation
     const userMailOptions = {
-        from: `"SECEL Formation" <secelgroup2025@gmail.com>`,
+        from: `"SECEL Formation" <zwanko@secelgroup.com>`,
         to: form.email, // user's email from the form
         subject: 'Confirmation de votre inscription à la Formation PMP',
         html: userEmailContent
