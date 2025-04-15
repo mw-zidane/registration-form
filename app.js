@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Add JSON parsing for AJAX requests
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
@@ -15,7 +16,8 @@ app.get('/', (req, res) => res.render('form'));
 app.post('/submit', async (req, res) => {
     const form = req.body;
 
-    const output = `
+    // Email content for admin notification
+    const adminEmailContent = `
     <h3>Nouvelle inscription reçue :</h3>
     <h4>Entreprise</h4>
     <ul>
@@ -32,7 +34,7 @@ app.post('/submit', async (req, res) => {
     <ul>
         <li><strong>Nom:</strong> ${form.nom_prenom}</li>
         <li><strong>Fonction:</strong> ${form.fonction}</li>
-        <li><strong>Années d’expérience:</strong> ${form.experience}</li>
+        <li><strong>Années d'expérience:</strong> ${form.experience}</li>
         <li><strong>Email:</strong> ${form.email}</li>
     </ul>
     <h4>Pack</h4>
@@ -47,7 +49,30 @@ app.post('/submit', async (req, res) => {
     </ul>
   `;
 
-    // Transporter using your SMTP
+    // Email content for user confirmation
+    const userEmailContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #4a6ee0;">Confirmation d'Inscription - Formation PMP</h2>
+        <p>Bonjour <strong>${form.nom_prenom}</strong>,</p>
+        <p>Nous vous remercions pour votre inscription à notre formation PMP prévue en Mai 2025.</p>
+        
+        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="color: #333;">Récapitulatif de votre inscription</h3>
+            <p><strong>Nom :</strong> ${form.nom_prenom}</p>
+            <p><strong>Email :</strong> ${form.email}</p>
+            <p><strong>Entreprise :</strong> ${form.entreprise_nom}</p>
+            <p><strong>Pack choisi :</strong> ${form.pack}</p>
+        </div>
+        
+        <p>Notre équipe va examiner votre inscription et vous contactera prochainement pour la suite des démarches.</p>
+        <p>Si vous avez des questions, n'hésitez pas à nous contacter par email.</p>
+        
+        <p style="margin-top: 30px;">Cordialement,</p>
+        <p><strong>L'équipe SECEL</strong></p>
+    </div>
+    `;
+
+    // Create transporter
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT || 587,
@@ -58,19 +83,37 @@ app.post('/submit', async (req, res) => {
         }
     });
 
-    const mailOptions = {
-        from: `${form.nom_prenom} <${form.email}>`, // user's email
-        to: 'zcodez237@gmail.com', // your fixed email
-        subject: 'Nouvelle Inscription – Formulaire',
-        html: output
+    // Email options for admin notification
+    const adminMailOptions = {
+        from: `"Formulaire d'Inscription PMP" <${process.env.SMTP_USER}>`,
+        to: 'secelgroup2025@gmail.com', // admin email
+        subject: 'Nouvelle Inscription Formation PMP',
+        html: adminEmailContent
+    };
+
+    // Email options for user confirmation
+    const userMailOptions = {
+        from: `"SECEL Formation" <${process.env.SMTP_USER}>`,
+        to: form.email, // user's email from the form
+        subject: 'Confirmation de votre inscription à la Formation PMP',
+        html: userEmailContent
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        res.status(200).send('OK'); // So the modal will trigger on success
+        // Send admin notification email
+        await transporter.sendMail(adminMailOptions);
+
+        // Send user confirmation email
+        await transporter.sendMail(userMailOptions);
+
+        // Send success response
+        res.status(200).json({ success: true });
     } catch (err) {
-        console.error('Erreur email:', err);
-        res.status(500).send("Erreur lors de l'envoi du message.");
+        console.error('Email Error:', err);
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de l'envoi du message."
+        });
     }
 });
 
